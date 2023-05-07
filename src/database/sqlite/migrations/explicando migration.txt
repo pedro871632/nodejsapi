@@ -1,0 +1,1 @@
+migrations e a pasta onde vai ter os comandos sql, que vai ser rodado atraves do objeto database.

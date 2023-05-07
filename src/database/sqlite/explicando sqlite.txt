@@ -1,0 +1,2 @@
+pasta que possui os migrations , e um arquivo js que cria conexao com  o banco de dados. 
+e o arquivo de fato que armazena o banco de dados.

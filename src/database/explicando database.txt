@@ -1,0 +1,1 @@
+pasta que contem todas as configuracoes e funcoes sobre banco de dados
