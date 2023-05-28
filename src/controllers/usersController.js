@@ -76,7 +76,7 @@ class usersController {
 
         database.run("DELETE FROM users WHERE id = (?)",[id]);
 
-        response.status(200).json({
+        return response.status(200).json({
             message : "user deleted",
             status: "201"
         });
