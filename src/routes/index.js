@@ -7,13 +7,16 @@ const sessionRouter = require("./sessions.routes");
 
 
 const routes = Router();
+
+
+
 routes.use("/user",usersRouter);
+
 routes.use("/sessions",sessionRouter);
 
 routes.use("/notes",notesRouter);
 
 routes.use("/tags",tagsRouter);
-
 
 module.exports = routes;
 

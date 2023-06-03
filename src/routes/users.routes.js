@@ -1,21 +1,24 @@
-const {Router} = require("express")
+const {Router} = require("express");
+const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
+const multer = require("multer");
+const uploadConfig = require("../config/upload");
+
 let usersController = require("../controllers/usersController")
+
+const upload = multer(uploadConfig.MULTER)
 
 const userRoutes = Router();
 
-function myMiddleware(request,response,next){
-    console.log("voce passou pelo middlaware");
-
-    next();
-}
-
-
 const usersControllers = new usersController();
-userRoutes.post("/",myMiddleware,usersControllers.create);
 
-userRoutes.put("/:id",usersControllers.update);
 
-userRoutes.delete("/:id",usersControllers.delete)
+userRoutes.post("/",usersControllers.create);
+
+userRoutes.put("/",ensureAuthenticated,usersControllers.update);
+
+userRoutes.delete("/:id",usersControllers.delete);
+
+userRoutes.patch("/avatar",ensureAuthenticated,upload.single("avatar"))
 
 
 module.exports = userRoutes;

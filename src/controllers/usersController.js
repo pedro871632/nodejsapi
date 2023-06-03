@@ -24,7 +24,7 @@ class usersController {
 
     async update(request,response){
             const {name,email,password,oldpassword} = request.body;
-            const {id} = request.params;
+            const id = request.user.id;
 
             const database = await sqliteConnection();
             const user = await database.get("SELECT * FROM users WHERE id = (?)",[id]);
@@ -70,7 +70,7 @@ class usersController {
         }
 
     async delete(request,response){
-        const {id} = request.params;
+        const id = request.user.id;
 
         database = await sqliteConnection();
 
