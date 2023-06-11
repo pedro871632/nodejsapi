@@ -6,7 +6,7 @@ const appError = require("../utils/appError");
 class usersController {
     async create(request,response){
         
-        const {name,email,senha} = request.body;
+        const {name,email,password} = request.body;
         
         const database = await sqliteConnection();
         const checkUserExists = await database.get(`SELECT * FROM users WHERE email = (?)`,[email])
@@ -15,7 +15,7 @@ class usersController {
             throw new appError("Este e-mail ja esta em uso")
         }
 
-        const passwordCrypto = await hash(senha,8)
+        const passwordCrypto = await hash(password,8)
       
         await database.run("INSERT INTO users (name,email,password) VALUES(?, ?, ?)",[name,email, passwordCrypto])
         return response.status(201).json();
@@ -24,7 +24,7 @@ class usersController {
 
     async update(request,response){
             const {name,email,password,oldpassword} = request.body;
-            const {id} = request.params;
+            const id = request.user.id;
 
             const database = await sqliteConnection();
             const user = await database.get("SELECT * FROM users WHERE id = (?)",[id]);
@@ -70,13 +70,13 @@ class usersController {
         }
 
     async delete(request,response){
-        const {id} = request.params;
+        const id = request.user.id;
 
         database = await sqliteConnection();
 
         database.run("DELETE FROM users WHERE id = (?)",[id]);
 
-        response.status(200).json({
+        return response.status(200).json({
             message : "user deleted",
             status: "201"
         });
